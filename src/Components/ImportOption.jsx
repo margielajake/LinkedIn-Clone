@@ -1,10 +1,10 @@
 import React from "react";
 
-const ImportOption = ({ title, Icon }) => {
+const ImportOption = ({ Icon, title, color }) => {
   return (
-    <div>
+    <div className="flex hover:bg-slate-200 hover:rounded-[10px] p-3">
       <Icon style={{ color: color }} />
-      <h4>{title}</h4>
+      <h4 className="font-semibold ml-2 text-gray-400">{title}</h4>
     </div>
   );
 };

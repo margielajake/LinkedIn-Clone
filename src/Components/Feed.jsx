@@ -1,6 +1,9 @@
 import React from "react";
 import CreateIcon from "@mui/icons-material/Create";
 import ImageIcon from "@mui/icons-material/Image";
+import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
+import EventNoteIcon from "@mui/icons-material/EventNote";
+import CalendarViewDayIcon from "@mui/icons-material/CalendarViewDay";
 import ImportOption from "./ImportOption";
 
 const Feed = () => {
@@ -18,10 +21,20 @@ const Feed = () => {
               Send
             </button>
           </form>
-          <div>
-            <ImportOption Icon={ImageIcon} title="Image" color="#70B5F9" />
-            <ImportOption Icon={ImageIcon} title="Image" color="#70B5F9" />
-          </div>
+        </div>
+        <div className="flex justify-evenly mt-4 cursor-pointer">
+          <ImportOption Icon={ImageIcon} title="Photo" color="#70B5F9" />
+          <ImportOption
+            Icon={SubscriptionsIcon}
+            title="Video"
+            color="#E7A33E"
+          />
+          <ImportOption Icon={EventNoteIcon} title="Event" color="#C0CBCD" />
+          <ImportOption
+            Icon={CalendarViewDayIcon}
+            title="WriteArticle"
+            color="#7FC15E"
+          />
         </div>
       </div>
     </div>
