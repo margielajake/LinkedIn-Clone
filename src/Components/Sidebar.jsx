@@ -37,7 +37,7 @@ function Sidebar() {
       <div className="sidebar-bottom  border-[1px] bg-white p-[10px] rounded-[10px] mt-[10px] text-left">
         Recent
         {recentItems("webdevelopment")}
-        {recentItems("Office Clerk")}
+        {recentItems("Officeclerk")}
         {recentItems("Humanresource")}
         {recentItems("programming")}
         {recentItems("Softwareengineering")}
