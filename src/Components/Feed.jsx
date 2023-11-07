@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import CreateIcon from "@mui/icons-material/Create";
 import ImageIcon from "@mui/icons-material/Image";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
@@ -6,30 +5,45 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import CalendarViewDayIcon from "@mui/icons-material/CalendarViewDay";
 import ImportOption from "./ImportOption";
 import Posts from "./Posts";
+import { useEffect, useState } from "react";
+import { colRef } from "../features/firebase";
+import {
+  addDoc,
+  onSnapshot,
+  serverTimestamp,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 const Feed = () => {
+  const [input, setInput] = useState("");
   const [posts, setPosts] = useState([]);
-  const [input, setInput] = useState([]);
 
   useEffect(() => {
-    db.collection("posts").onSnapshot((snaphot) =>
-      setPosts(
-        snaphot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data,
-        }))
-      )
-    );
+    const q = query(colRef, orderBy("timestamp", "desc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const postsArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        data: doc.data(),
+      }));
+      setPosts(postsArray);
+    });
+    return () => unsubscribe();
   }, []);
 
   const sendPost = (e) => {
     e.preventDefault();
-  };
 
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
-  };
+    addDoc(colRef, {
+      name: "Jake Campbell",
+      description: "this is a test",
+      message: input,
+      photoUrl: "",
+      timestamp: serverTimestamp(),
+    });
 
+    setInput("");
+  };
   return (
     <div className="flex-[0.6] mx-5">
       <div className="bg-white p-2 pb-5 rounded-[10px] mb-5 ">
@@ -38,8 +52,7 @@ const Feed = () => {
           <form className="flex w-[100%]">
             <input
               value={input}
-              onChange={handleInputChange}
-              type="text"
+              onChange={(e) => setInput(e.target.value)}
               className="border-none flex-1 ml-2 outline-none focus:outline-none font-[600]"
             />
             <button onClick={sendPost} type="submit" className="hidden">
@@ -62,14 +75,16 @@ const Feed = () => {
           />
         </div>
       </div>
-      {posts.map((post) => (
-        <Posts />
+
+      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+        <Posts
+          key={id}
+          name={name}
+          description={description}
+          message={message}
+          photoUrl={photoUrl}
+        />
       ))}
-      <Posts
-        name="Jake Campbell"
-        message="City are the Champions of Europe!"
-        description="This is a test"
-      />
     </div>
   );
 };

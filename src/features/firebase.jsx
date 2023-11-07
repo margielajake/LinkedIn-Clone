@@ -1,6 +1,7 @@
-import firebase from "firebase";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCMiSzfld0EBjIaDaroZYNeP4BUn00nDm8",
   authDomain: "linkedin-clone-93d14.firebaseapp.com",
@@ -8,11 +9,14 @@ const firebaseConfig = {
   storageBucket: "linkedin-clone-93d14.appspot.com",
   messagingSenderId: "877137824723",
   appId: "1:877137824723:web:ba3b7ddd01cde3745e3d26",
-  measurementId: "G-NB11JFVRMK",
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-const db = firebaseApp.fireStore();
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
 
-export { db, auth };
+const db = getFirestore(app);
+
+const analytics = getAnalytics(app);
+
+const colRef = collection(db, "posts");
+
+export { db, colRef };
