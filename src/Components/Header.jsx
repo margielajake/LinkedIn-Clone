@@ -20,9 +20,10 @@ function Header() {
         <div className="search-input m-2 flex items-center justify-center border bg-gray-200 rounded-md h-10 px-2">
           <SearchIcon />
           <input
+            placeholder="Search"
             type="text"
-            name=""
-            id=""
+            name="search"
+            id="search"
             className="bg-transparent outline-transparent border-0 focus:outline-none"
           />
         </div>
